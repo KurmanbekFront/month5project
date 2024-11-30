@@ -2,6 +2,7 @@ import './App.css';
 import ChangeTitle from './components/ChangeTitle';
 import AboutPage from './pages/aboutPage/AboutPage';
 import ContactsPage from './pages/contactsPage/ContactsPage';
+import CountPage from './pages/countPage/CountPage';
 import MainPage from './pages/mainPage/MainPage';
 
 function App() {
@@ -10,7 +11,8 @@ function App() {
           {/* <MainPage/> */}
           {/* <AboutPage />
           <ChangeTitle /> */}
-          <ContactsPage />
+          {/* <ContactsPage /> */}
+          <CountPage />
       </div>
   );
 }
