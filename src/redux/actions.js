@@ -1,123 +1,142 @@
-
-
 import { types } from "./types";
-
 import axios from "axios"
 
-
-export function changeTitleAction() {
-    return {
-        type: types.CHANGE_TITLE
-    }
-}
-
-export function withParamsAction(text) {
-    return {
-        type: types.WITH_PARAMS,
-        payload: text
-    }
-}
-
-export const addTask = (task) => ({
-    type: types.ADD_TASK,
-    payload: task
-})
-
-export const deleteTodo = (id) => ({
-    type: types.DELETE_TODO,
-    payload: id,
-})
-
-export const editTodo = (id, newText) => ({
-    type: types.EDIT_TODO,
-    payload: {id, newText},
-})
-
-export const setFilter = (filter) => ({
-    type: types.SET_FILTER,
-    payload: filter,
-})
-
-export const toggleTask = (taskId) => ({
-    type: types.TOGGLE_TASK,
-    payload: taskId
-})
-
-
-export function asyncFunctionAction () {
-    return function () {
-        setTimeout(() => {
-            alert("Hello")
-        }, 2000)
-    }
-}
-
-function getUsersAction (users) {
-    return {
-        type: "USER",
-        payload: users
-    }
-}
-
-export function fetchUserAction () {
-    return async function (dispatch) {
-        const response = await fetch(`https://jsonplaceholder.typicode.com/users`)
-        const data = await response.json()
-        dispatch(getUsersAction(data))
-    }
-}
-
-export const searchUserRequest = () => ({
-    type: types.SEARCH_USER_REQUEST
-})
-
-export const searchUserSuccess = (users) => ({
-    type: types.SEARCH_USER_SUCCESS,
-    payload: users
-})
-
-export const searchUserFailure = (error) => ({
-    type: types.SEARCH_USER_FAILURE,
-    payload: error
-})
-
-export const fetchUsers = (query) => async (dispatch) => {
-    dispatch(searchUserRequest())
+export const fetchCharacters = (page = 1) => async (dispatch) => {
+    dispatch({type: types.FETCH_CHARACTER_REQUEST})
     try {
-        const response = await axios.get(`https://api.github.com/search/users?q=${query}`)
-        dispatch(searchUserSuccess(response.data.items))
+        const response = await axios.get(`https://rickandmortyapi.com/api/character?page=${page}`)
+        dispatch({type: types.FETCH_CHARACTER_SUCCESS, payload: response.data}) 
     } catch (error) {
-        dispatch(searchUserFailure(error.message))
+        dispatch({type: types.FETCH_CHARACTER_FAILURE, error: error.message})
     }
 }
 
-/////////////////////////////////////////////
-function getPokemonAction (pokemons) {
-    return {
-        type: "POKEMON",
-        payload: pokemons
+export const addUserAction = (user) => async (dispatch) => {
+    const options = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    }
+    const response = await fetch(`https://jsonplaceholder.typicode.com/users`, options)
+}
+
+export const fetchCatSuccess = (catImage) => ({
+    type: types.FETCH_CAT_SUCCESS,
+    payload: catImage
+})
+
+export const fetchCat = () => async (dispatch) => {
+    try {
+        const response = await axios.get(`https://api.thecatapi.com/v1/images/search`)
+        dispatch(fetchCatSuccess(response.data[0].url))
+    } catch (error) {
+        console.error(`Failed to fetch cat:`, error);
+        
+    }
+}
+
+export const fetchJokeSuccess = (joke) => ({
+    type: types.FETCH_JOKE_SUCCESS,
+    payload: joke
+})
+
+export const fetchJoke = () => async (dispatch) => {
+    try {
+        const response = await axios.get(`https://official-joke-api.appspot.com/random_joke`)
+        const joke = `${response.data.setup} - ${response.data.punchline}`
+        dispatch(fetchJokeSuccess(joke))
+    } catch (error) {
+        console.error(`Failed to fetch joke:`, error);
     }
 }
 
 
-export function fetchPokemonAction () {
-    return async function (dispatch) {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=20&limit=20`)
-        const data = await response.json()
 
-        const pokemonsWithImages = [];
+////////////////////////////////////////////////////////////////
+// 5 api request
 
-        for (let pokemon of data.results) {
-            const pokemonResponse = await fetch(pokemon.url);
-            const pokemonData = await pokemonResponse.json();
-            
-            pokemonsWithImages.push({
-                name: pokemonData.name,
-                imageUrl: pokemonData.sprites.other.dream_world.front_default,
-            });
-        }
 
-        dispatch(getPokemonAction(pokemonsWithImages));
+// Random cat fact
 
+
+const fetchCatFactSuccess = (catFact) => ({
+    type: types.FETCH_FACT_SUCCESS,
+    payload: catFact
+})
+
+export const fetchCatFact = () => async (dispatch) => {
+    try {
+        const response = await axios.get(`https://catfact.ninja/fact`)
+        dispatch(fetchCatFactSuccess(response.data))
+    } catch (error) {
+        console.error(`Failed to fetch cat fact:`, error);
+    }
+}
+
+// Random dog image
+
+const fetchDogSuccess = (dogImage) => ({
+    type: types.FETCH_DOG_SUCCESS,
+    payload: dogImage
+})
+
+export const fetchDog = () => async (dispatch) => {
+    try {
+        const response = await axios.get(`https://dog.ceo/api/breeds/image/random`)
+        dispatch(fetchDogSuccess(response.data)) 
+    } catch (error) {
+        console.error(`Failed to fetch dog image:`, error);
+        
+    }
+}
+
+// Random user
+
+const fetchRandomUserSuccess = (randomUser) => ({
+    type: types.FETCH_RANDOM_USER_SUCCESS,
+    payload: randomUser
+})
+
+export const fetchRandomUser = () => async (dispatch) => {
+    try {
+        const response = await axios.get(`https://randomuser.me/api/`)
+        dispatch(fetchRandomUserSuccess(response))
+    } catch (error) {
+        console.error(`Failed to fetch random user:`, error);
+    }
+}
+
+// Random quote
+
+const fetchQuoteSuccess = (quote) => ({
+    type: types.FETCH_QUOTE_SUCCESS,
+    payload: quote
+})
+
+export const fetchQuote = () => async (dispatch) => {
+    try {
+        const response = await axios.get(`https://perl.is/random`)
+        dispatch(fetchQuoteSuccess(response.data.quote))
+    } catch (error) {
+        console.error(`Failed to fetch quote:`, error);
+    }
+}
+
+
+// Random extinct animal
+
+const fetchExtinctAnimalSuccess = (extinctAnimal) => ({
+    type: types.FETCH_EXTINCT_ANIMAL_SUCCESS,
+    payload: extinctAnimal
+})
+
+export const fetchExtinctAnimal = () => async (dispatch) => {
+    try {
+        const response = await axios.get(`https://extinct-api.herokuapp.com/api/v1/animal/`)
+        dispatch(fetchExtinctAnimalSuccess(response.data))
+    } catch (error) {
+        console.error(`Failed to fetch extinct animal:`, error);
     }
 }

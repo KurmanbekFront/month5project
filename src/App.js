@@ -1,51 +1,38 @@
-import { useState } from 'react';
-import './App.css';
-import AddTask from './components/AddTask';
-import CategoryFilter from './components/CategoryFilter';
-import TaskList from './components/TaskList';
-import { addTask, setFilter } from './redux/actions';
-import { useDispatch, useSelector } from 'react-redux';
-import TodoFilter from './components/TodoFilter';
-import AddTodo from './components/AddTodo';
-import TodoList from './components/TodoList';
-import ChangeTitle from './components/ChangeTitle';
-import UsersPage from './pages/usersPage/UsersPage';
-import SearchBar from './components/SearchBar';
-import UserList from './components/UserList';
-import PokemonList from './components/PokemonList';
-
-
-
+import "./App.css";
+import RickAndMortyPage from "./pages/RickAndMortyPage";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import UserListPage from "./pages/userListPage/UserListPage";
+import UserRegisterPage from "./pages/userRegisterPage/UserRegisterPage";
+import Menu from "./components/Menu";
+import AboutPage from "./pages/AboutPage";
+import CatPage from "./pages/CatPage";
+import JokePage from "./pages/JokePage";
+import AppNavBar from "./pages/AppNavBar";
+import CatFactPage from "./pages/dzPages/CatFactPage";
+import DogPage from "./pages/dzPages/DogPage";
+import RandomUserPage from "./pages/dzPages/RandomUserPage";
+import QuotePage from "./pages/dzPages/QuotePage";
+import ExtinctAnimalPage from "./pages/dzPages/ExtinctAnimalPage";
 function App() {
-  // const [filter, setFilter] = useState("")
-
-  const dispatch = useDispatch();
-  const { filter, categories } = useSelector((state) => state.todoReducer);
-
-
-  const handleFilterChange = (category) => {
-    dispatch(setFilter(category));
-  };
-
-  return (
-      <div className="app-container">
-          {/* <h1>Task Manager</h1>
-          <AddTask />
-          <CategoryFilter onChange={setFilter}/>
-          <TaskList filter={filter}/> */}
-          {/* <h1>Todo List</h1>
-          <TodoFilter categories={categories} onChange={handleFilterChange} />
-          <AddTodo />
-          <TodoList filter={filter} /> */}
-          {/* <ChangeTitle /> */}
-          {/* <UsersPage /> */}
-          {/* <h1>GitHub User Search</h1>
-          <SearchBar />
-          <UserList /> */}
-          <h1>Pokemons</h1>
-          <PokemonList />
-      </div>
-  );
+    return (
+        <BrowserRouter>
+        <AppNavBar/>
+            <div className="container mt-4">
+                <Routes>
+                    <Route path="/" element={<AboutPage />} />
+                    {/* <Route path="/cats" element={<CatPage/>} />
+                    <Route path="/jokes" element={<JokePage/>} />
+                    <Route path="/about" element={<AboutPage/>} /> */}
+                    <Route path="/catfact" element={<CatFactPage />}/>
+                    <Route path="/dogs" element={<DogPage />}/>
+                    <Route path="/randomuser" element={<RandomUserPage />}/>
+                    <Route path="/quote" element={<QuotePage />}/>
+                    <Route path="/extinctanimal" element={<ExtinctAnimalPage />}/>
+                </Routes>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;

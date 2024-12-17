@@ -1,6 +1,5 @@
-.app-container {
+.container {
   margin: 20px auto;
-  max-width: 1000px;
   text-align: center;
 }
 
@@ -44,42 +43,9 @@ button:hover {
   background-color: #0056b3;
 }
 
-.add-task-form {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 16px;
 }
-
-
-.userCard {
-  width: 250px;
-  height: 250px;
-  padding: 10px;
-  box-shadow: 4px 4px 4px 1px gray;
-  border: 2px solid;
-  border-radius: 10px;
-}
-
-.cardBlock {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
-
-
-.pokemon-list {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.pokemon-item {
-  width: 200px;
-  height: 200px;
-}
-
-.pokemon-item img {
-  width: 100px;
-  height: 100px;
-}
-
