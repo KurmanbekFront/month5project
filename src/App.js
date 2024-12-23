@@ -1,17 +1,19 @@
 import "./App.css";
-
 import "bootstrap/dist/css/bootstrap.min.css";
-
-
-import MainPage from "./pages/mainPage/MainPage";
-import UsersPage from "./pages/usersPage/UsersPage";
-import CountPage from "./pages/countPage/CountPage";
+import CreatePostPage from "./pages/createPostPage/CreatePostPage";
+import TaskForm from "./components/TaskForm";
+import TaskList from "./components/TaskList";
 function App() {
     return (
         <div className="container">
             {/* <MainPage/> */}
             {/* <UsersPage/> */}
-            <CountPage />
+            {/* <CountPage /> */}
+            {/* <PostsPage /> */}
+            {/* <CreatePostPage /> */}
+            <h1>Task Planner</h1>
+            <TaskForm />
+            <TaskList />
         </div>
     );
 }
